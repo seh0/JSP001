@@ -4,18 +4,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판</title>
 <style>
-th, td {
-	padding: 15px;
+table {
+	width: 100%;
+	margin: 20px auto;
+	border-collapse: collapse;
 }
 
 th {
-	border-bottom: 1px solid black;
+	padding: 12px;
+	background-color: gray;
+	color: white;
+	text-align: center;
+	font-size: 18px;
+	border-bottom: 2px solid #ddd;
 }
 
 td {
+	padding: 12px;
 	text-align: center;
+	border-bottom: 1px solid #ddd;
+	font-size: 16px;
+}
+
+tr:hover {
+	background-color: #f2f2f2;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -37,7 +52,7 @@ td {
 			ResultSet rset = stmt.executeQuery();
 			while (rset.next()) {
 				if (cnt == 5) {
-			return;
+			break;
 				}
 		%>
 		<tr onclick="window.open('show_list.jsp?no=<%=rset.getString("no")%>', '_blank', 'width=600,height=500,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">

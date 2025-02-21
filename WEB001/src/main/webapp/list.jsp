@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+table {
+	border-collapse: collapse;
+}
+
 th, td {
 	padding: 15px;
 }
@@ -22,9 +26,9 @@ td {
 	border-bottom: 1px dotted gray
 }
 
-.detail {
-	background-color: white;
-	border: none;
+.ho:hover {
+	background: #dcdcdc;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -47,17 +51,11 @@ td {
 			ResultSet rset = stmt.executeQuery();
 			while (rset.next()) {
 		%>
-		<tr>
+		<tr class="ho" onclick="location.href='info_list.jsp?no=<%=rset.getString("no")%>'">
 			<td class="li"><%=num++%></td>
 			<td class="li"><%=rset.getString("title")%></td>
 			<td class="li"><%=rset.getString("writer")%></td>
 			<td class="li"><%=rset.getString("wdate")%></td>
-			<td>
-				<form action="info_list.jsp">
-					<input type="hidden" name="no" value=<%=rset.getString("no")%>>
-					<button class="detail" type="submit">+</button>
-				</form>
-			</td>
 		</tr>
 		<%
 		}

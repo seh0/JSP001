@@ -5,79 +5,85 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.page {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	margin: 15vh 10vh;
-}
+  .wrap {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 15vh 10vh;
+  }
 
-.banner {
-	background-image: url('imgs/sky.png');
-	height: 40vh;
-	border-radius: 20px;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
+  .banner {
+    background-image: url('imgs/sky.png');
+    height: 40vh;
+    border-radius: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
-.box {
-	margin-top: 5vh;
-	display: flex;
-	flex-direction: row;
-	height: 40vh;
-}
+  .link-box {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    height: 40vh;
+  }
 
-.box div {
-	background-color: #f2f2f2;
-	flex: 1;
-	margin: 15px;
-	padding-top: 30px;
-	border-radius: 20px;
-	display: flex;
-	flex-direction: column;
-	cursor: pointer;
-	align-items: center;
-	transition: all.3s;
-}
+  .link-item {
+    background-color: #f2f2f2;
+    flex: 1;
+    margin: 15px;
+    padding-top: 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    align-items: center;
+  }
 
-.box div:hover {
-	transform: scale(0.9);
-}
+  .link-item:hover {
+    background: #dcdcdc;
+  }
 
-.list {
-	margin-top: 5vh;
-	height: 40vh;
-	display: flex;
-	flex-direction: column;
-}
+  .list-container {
+    margin-top: 5vh;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-img {
-	width: 150px;
-	height: 150px;
-}
+  .link-item img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
 </style>
 </head>
 <body>
 	<%@ include file="layout/header.jsp"%>
-	<div class="page">
+	<div class="wrap">
 		<div class="banner"></div>
 		<h1>LINK</h1>
-		<div class="box">
-			<div onclick="location.href='list_page.jsp'">
+		<div class="link-box">
+			<div class="link-item" onclick="location.href='list_page.jsp'">
 				<img alt="write" src="imgs/write.png">
 				<h1>LIST</h1>
 			</div>
-			<div onclick="window.open('https://github.com/seh0')">
+			<div class="link-item" onclick="window.open('https://github.com/seh0')">
 				<img alt="github" src="imgs/github.png">
 				<h1>GitHub</h1>
 			</div>
-			<div onclick="window.open('https://velog.io/@seh0/posts')">
+			<div class="link-item" onclick="window.open('https://velog.io/@seh0/posts')">
 				<img alt="Velog" src="imgs/velog.png">
 				<h1>VeLog</h1>
 			</div>
 		</div>
 		<h1>LIST</h1>
-		<div class="list">
+		<div class="list-container">
 			<%@ include file="s_list.jsp"%>
 		</div>
 	</div>
