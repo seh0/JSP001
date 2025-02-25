@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
+<title>list</title>
 <style>
 table {
 	width: 100%;
@@ -14,7 +14,7 @@ table {
 
 th {
 	padding: 12px;
-	background-color: gray;
+	background-color: #5a9;
 	color: white;
 	text-align: center;
 	font-size: 18px;
@@ -44,10 +44,11 @@ tr:hover {
 		<%
 		String url = "jdbc:mysql://localhost:3309/spring5fs";
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String sql = "select * from list";
+		String sql = "select * from board order by wdate desc";
+		Connection conn = null;
 		int cnt = 0;
 		try {
-			Connection conn = DriverManager.getConnection(url, "root", "1234");
+			conn = DriverManager.getConnection(url, "root", "1234");
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rset = stmt.executeQuery();
 			while (rset.next()) {
@@ -65,6 +66,12 @@ tr:hover {
 		}
 		} catch (Exception e) {
 		e.printStackTrace();
+		} finally {
+		if (conn != null)
+		try {
+			conn.close();
+		} catch (Exception e) {
+		}
 		}
 		%>
 	</table>

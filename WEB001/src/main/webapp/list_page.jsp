@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Board</title>
 <style>
 .page {
 	min-height: 100vh;
@@ -15,7 +15,7 @@
 }
 
 .list {
-	margin-top: 50px;
+	margin-top: 30px;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -42,6 +42,20 @@ td {
 	font-size: 16px;
 }
 
+.insert {
+	width: 40vh;
+}
+
+.btn {
+	font-size: 18px;
+	background-color: #5a9;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 6vw;
+}
+
 .hov:hover {
 	background: #dcdcdc;
 	cursor: pointer;
@@ -50,13 +64,17 @@ td {
 .b_box {
 	display: flex;
 	flex-direction: row;
-	margin-left: auto;
+	justify-content: flex-end;
 }
 
 .b_box button {
-	margin-right: 10px;
-	width: 80px;
-	height: 30px;
+	font-size: 20px;
+	background-color: #5a9;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 6vw;
 }
 </style>
 </head>
@@ -64,8 +82,12 @@ td {
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
 		<div class="b_box">
-			<button class="btn" type="button" onclick="location.href='write_list.jsp'">write</button>
-			<button class="btn" type="button" onclick="history.back()">back</button>
+			<form>
+				<input type="hidden" name="action" value="search">
+				<input class="insert" type="text" name="s_title" id="s_title">
+				<input class="btn " type="submit" value="검색">
+			</form>
+			<button type="button" onclick="location.href='write_list.jsp'">글 작성</button>
 		</div>
 		<div class="list">
 			<table>
@@ -76,14 +98,28 @@ td {
 					<th>작성일</th>
 				</tr>
 				<%
+				request.setCharacterEncoding("UTF-8");
+				String s_title = request.getParameter("s_title");
 				String url = "jdbc:mysql://localhost:3309/spring5fs";
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				String sql = "select * from list";
+				Connection conn = null;
+				String sql = null;
+				PreparedStatement stmt = null;
+				ResultSet rset = null;
 				int num = 1;
 				try {
-					Connection conn = DriverManager.getConnection(url, "root", "1234");
-					PreparedStatement stmt = conn.prepareStatement(sql);
-					ResultSet rset = stmt.executeQuery();
+					conn = DriverManager.getConnection(url, "root", "1234");
+
+					if ("search".equals(request.getParameter("action")) && s_title != null && !s_title.isEmpty()) {
+						sql = "SELECT * FROM board WHERE title LIKE ?";
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, "%" + s_title + "%");
+					} else {
+						sql = "SELECT * FROM board";
+						stmt = conn.prepareStatement(sql);
+					}
+
+					rset = stmt.executeQuery();
 					while (rset.next()) {
 				%>
 				<tr class="hov" onclick="location.href='info_list.jsp?no=<%=rset.getString("no")%>'">
@@ -96,6 +132,12 @@ td {
 				}
 				} catch (Exception e) {
 				e.printStackTrace();
+				} finally {
+				if (conn != null)
+				try {
+					conn.close();
+				} catch (Exception e) {
+				}
 				}
 				%>
 			</table>

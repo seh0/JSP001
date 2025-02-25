@@ -30,6 +30,6 @@ body {
 </style>
 </head>
 <body>
-	<div class="footer">footer</div>
+	<div class="footer">help : 012-3456-789 / JSP WEB PAGE</div>
 </body>
 </html>

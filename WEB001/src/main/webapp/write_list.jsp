@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Write</title>
 <style>
 .page {
 	min-height: 60vh;
@@ -55,10 +55,23 @@
 	background-color: #f9f9f9;
 }
 
-.btn_box {
+.b_box {
+	margin-left: auto;
+	margin-top: auto;
 	display: flex;
+	flex-direction: row;
+	gap: 30px;
 	justify-content: flex-end;
-	margin-top: 20px;
+}
+
+.b_box button {
+	padding: 10px;
+	font-size: 20px;
+	background-color: #5a9;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -67,6 +80,7 @@
 	<div class="page">
 		<h1>글 작성</h1>
 		<form action="write.jsp">
+			<input type="hidden" name="id" value="<%=session.getAttribute("u_id")%>">
 			<input type="text" class="title" name="title" required placeholder="제목을 입력하세요">
 			<textarea class="contents" name="contents" required placeholder="내용을 입력하세요"></textarea>
 			<br> <br>
@@ -85,7 +99,7 @@
 				}
 				%>
 			</div>
-			<div class="btn_box">
+			<div class="b_box">
 				<button type="submit">작성하기</button>
 				<button type="button" onclick="history.back()">뒤로가기</button>
 			</div>

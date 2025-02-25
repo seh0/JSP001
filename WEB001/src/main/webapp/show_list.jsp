@@ -4,17 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SHOW</title>
 <style>
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
+	background-color: #5a9;
 	margin: 0;
 	padding: 0;
 }
 
 h1 {
-	color: #333;
+	color: #fff;
 	font-size: 2em;
 	margin-left: 30px;
 	margin-bottom: 10px;
@@ -44,12 +43,13 @@ h1 {
 		<%
 		String url = "jdbc:mysql://localhost:3309/spring5fs";
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		String sql = "select * from list where no=?";
-		String li_no = request.getParameter("no");
-		int no = Integer.parseInt(li_no);
+		String sql = "select * from board where no=?";
+		String b_no = request.getParameter("no");
+		Connection conn = null;
+		int no = Integer.parseInt(b_no);
 
 		try {
-			Connection conn = DriverManager.getConnection(url, "root", "1234");
+			conn = DriverManager.getConnection(url, "root", "1234");
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, no);
 			ResultSet rset = stmt.executeQuery();
@@ -58,12 +58,18 @@ h1 {
 		%>
 		<h1><%=rset.getString("title")%></h1>
 		<div class="content">
-			<%=rset.getString("contents")%>
+			<%=rset.getString("cont")%>
 		</div>
 		<%
 		}
 		} catch (Exception e) {
 		e.printStackTrace();
+		} finally {
+		if (conn != null)
+		try {
+			conn.close();
+		} catch (Exception e) {
+		}
 		}
 		%>
 	</div>

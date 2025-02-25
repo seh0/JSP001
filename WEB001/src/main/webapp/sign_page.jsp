@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Sign in</title>
@@ -62,10 +62,12 @@ button {
 </style>
 </head>
 <body>
+
 	<div class="container">
 		<h1>Sign In</h1>
-		<form action="sign_in.jsp">
-			<input type="text" name="u_id" placeholder="Enter your ID" required> <input type="password" name="u_pwd" placeholder="Enter your password" required>
+		<form action="sign_in.jsp" method="post">
+			<input type="text" name="u_id" placeholder="Enter your ID" required>
+			<input type="password" name="u_pwd" placeholder="Enter your password" required>
 			<button type="submit">Sign In</button>
 		</form>
 		<div class="button-container">

@@ -34,6 +34,10 @@ body {
 	color: white;
 }
 
+.header a:hover{
+	color: #3C3C8C;
+}
+
 nav {
 	margin-left: 10vw;
 }
@@ -74,20 +78,20 @@ nav li {
 <body>
 	<div class="header">
 		<h1>
-			<a href="#" onclick="location.href='first.jsp'">JSP WEB</a>
+			<a href="first.jsp">JSP WEB</a>
 		</h1>
 		<nav>
 			<ul>
-				<li>menu1</li>
-				<li>menu2</li>
-				<li>menu3</li>
+				<li><a href="list_page.jsp">Board</a></li>
+				<li><a href="point_page.jsp">Point</a></li>
+				<li><a href="my_page.jsp">My Page</a></li>
 			</ul>
 		</nav>
 		<div class="sign">
 			<%
 			if (session.getAttribute("u_name") != null) {
 			%>
-			<%=session.getAttribute("u_name")%>
+			<h3><%=session.getAttribute("u_name")%></h3>
 			<button onclick="location.href='sign_out.jsp'">sign out</button>
 			<%
 			} else {

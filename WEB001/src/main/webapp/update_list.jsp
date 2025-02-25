@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Update</title>
 <style>
 .page {
 	min-height: 100vh;
@@ -23,10 +23,27 @@
 	resize: none;
 }
 
-.btn {
-	width: 5vw;
+.page button {
+	margin-top: 20px;
+	margin-left: auto;
+	padding: 10px;
+	font-size: 20px;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	padding: 10px;
 }
 
+.updt {
+	background-color: #5a9;
+	width: 100%
+}
+
+.back {
+	background-color: gray;
+	width: 20vw;
+}
 </style>
 </head>
 <body>
@@ -35,10 +52,11 @@
 		<form action="update.jsp">
 			<h1>내용 수정</h1>
 			<textarea class="contents" name="contents" required placeholder="내용을 입력하세요"></textarea>
-			<input type="hidden" name="no" value=<%=request.getParameter("no")%>> <br>
-			<button type="submit">update</button>
+			<input type="hidden" name="no" value=<%=request.getParameter("no")%>>
+			<br>
+			<button class="updt" type="submit">update</button>
 		</form>
-		<button class="btn" type="button" onclick="history.back()">back</button>
+		<button class="back" type="button" onclick="history.back()">back</button>
 	</div>
 	<%@ include file="layout/footer.jsp"%>
 </body>
