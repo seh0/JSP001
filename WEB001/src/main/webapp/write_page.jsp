@@ -10,7 +10,7 @@
 	display: flex;
 	flex-direction: column;
 	margin: 15vh 10vh;
-	background-color: #f2f2f2;
+	background-color: #f1fdf9;
 	padding: 30px;
 	border-radius: 20px;
 }
@@ -79,7 +79,7 @@
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
 		<h1>글 작성</h1>
-		<form action="write.jsp">
+		<form action="mod/write.jsp">
 			<input type="hidden" name="id" value="<%=session.getAttribute("u_id")%>">
 			<input type="text" class="title" name="title" required placeholder="제목을 입력하세요">
 			<textarea class="contents" name="contents" required placeholder="내용을 입력하세요"></textarea>

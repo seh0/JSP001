@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
+<%@ include file="/mod/db_connect.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>My Page</title>
 <style>
+body {
+	background-color: #e0d0f1;
+}
+
 .page {
 	min-height: 70vh;
 	display: flex;
@@ -50,27 +54,31 @@ img {
 </style>
 </head>
 <body>
-	<%@ include file="layout/header.jsp"%>
+	<%@ include file="/layout/header.jsp"%>
 	<div class="page">
 		<div class="info">
 			<img alt="user" src="imgs/user.png">
 			<%
 			request.setCharacterEncoding("UTF-8");
-			String url = "jdbc:mysql://localhost:3309/spring5fs";
-			Class.forName("com.mysql.cj.jdbc.Driver");
 			String u_id = (String) session.getAttribute("u_id");
-			Connection conn = null;
 			String sql = null;
 			try {
+				if (request.getParameter("action") != null && request.getParameter("action").equals("delete")) {
+					sql = "delete from account where id=?";
+					stmt = conn.prepareStatement(sql);
+					stmt.setString(1, u_id);
+					stmt.executeUpdate();
+					session.invalidate();
+					response.sendRedirect("out_page.jsp");
+				}
 				if (u_id != null) {
-					conn = DriverManager.getConnection(url, "root", "1234");
 					if (request.getParameter("action") != null && request.getParameter("action").equals("update")) {
 				String name = request.getParameter("name");
 				String u_age = request.getParameter("age");
 				String gender = request.getParameter("gender");
 				int age = Integer.parseInt(u_age);
 				sql = "update account set name=?,gender=?,age=? where id=?";
-				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, name);
 				stmt.setString(2, gender);
 				stmt.setInt(3, age);
@@ -80,9 +88,9 @@ img {
 					}
 
 					sql = "select * from account where id=?";
-					PreparedStatement stmt = conn.prepareStatement(sql);
+					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, u_id);
-					ResultSet rset = stmt.executeQuery();
+					rset = stmt.executeQuery();
 					while (rset.next()) {
 			%>
 			<button onclick="showUpdate('<%=rset.getString("name")%>','<%=rset.getInt("age")%>')">정보 수정</button>
@@ -98,6 +106,10 @@ img {
 			<h1>나이: <%=rset.getInt("age")%></h1>
 			<h1>포인트: <%=rset.getInt("point")%></h1>
 			<h1>가입날짜: <%=rset.getString("jdate")%></h1>
+			<form>
+				<input type="hidden" name="action" value="delete">
+				<input style="color: white; background-color: red; width: 5vw; margin-left: auto;" type="submit" value="탈퇴">
+			</form>
 			<%
 			}
 			} else {
@@ -148,6 +160,6 @@ img {
 			}
 		</script>
 	</div>
-	<%@ include file="layout/footer.jsp"%>
+	<%@ include file="/layout/footer.jsp"%>
 </body>
 </html>

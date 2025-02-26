@@ -77,7 +77,7 @@ button {
 <body>
 	<div class="container">
 		<h1>Sign up</h1>
-		<form action="sign_up.jsp" method="post">
+		<form action="mod/sign_up.jsp" method="post">
 			<label for="ac_id">ID</label>
 			<input type="text" id="ac_id" name="ac_id" required>
 			<label for="ac_pwd">PASSWORD</label>

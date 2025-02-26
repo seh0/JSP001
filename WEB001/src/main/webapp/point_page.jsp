@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +69,7 @@ img {
 	margin-bottom: 15px;
 }
 
-button {
+.page button {
 	padding: 10px;
 	font-size: 20px;
 	background-color: #5a9;
@@ -87,7 +86,7 @@ button {
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
 		<div class="list">
-			<%@ include file="rank.jsp"%>
+			<%@ include file="layout/rank.jsp"%>
 		</div>
 		<div class="reward">
 			<div>
@@ -99,7 +98,7 @@ button {
 				<%
 				if (session.getAttribute("u_id") != null) {
 				%>
-				<button onclick="window.open('get_point.jsp', '_blank', 'width=600,height=500,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">get point</button>
+				<button onclick="window.open('pop/get_point.jsp', '_blank', 'width=400,height=300,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">get point</button>
 				<%
 				}
 				%>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
+<%@ include file="/mod/db_connect.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +7,7 @@
 <title>Detail</title>
 <style>
 body {
-	background-color: #f2f2f2;
+	background-color: #f1fdf9;
 }
 
 .page {
@@ -35,7 +35,7 @@ body {
 }
 
 .b_box button {
-	padding : 10px;
+	padding: 10px;
 	font-size: 20px;
 	background-color: #5a9;
 	color: #fff;
@@ -45,25 +45,20 @@ body {
 	width: 100%;
 	padding: 10px;
 }
-
 </style>
 </head>
 <body>
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
 		<%
-		String url = "jdbc:mysql://localhost:3309/spring5fs";
-		Class.forName("com.mysql.cj.jdbc.Driver");
 		String b_no = request.getParameter("no");
 		int no = Integer.parseInt(b_no);
 		String b_id = null;
-		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, "root", "1234");
 			String sql = "select * from board where no=?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, no);
-			ResultSet rset = stmt.executeQuery();
+			rset = stmt.executeQuery();
 			while (rset.next()) {
 				b_id = rset.getString("id");
 		%>
@@ -76,10 +71,20 @@ body {
 		} catch (Exception e) {
 		e.printStackTrace();
 		} finally {
+		if (stmt != null)
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+		}
+		if (rset != null)
+		try {
+			rset.close();
+		} catch (SQLException e) {
+		}
 		if (conn != null)
 		try {
 			conn.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 		}
 		}
 		%>
@@ -89,11 +94,11 @@ body {
 			if (u_id != null) {
 				if (u_id.equals("admin") || u_id.equals(b_id)) {
 			%>
-			<form action="update_list.jsp">
+			<form action="update_page.jsp">
 				<input type="hidden" name="no" value=<%=b_no%>>
 				<button type="submit">update</button>
 			</form>
-			<form action="delete.jsp">
+			<form action="mod/delete.jsp">
 				<input type="hidden" name="no" value=<%=b_no%>>
 				<button type="submit">delete</button>
 			</form>

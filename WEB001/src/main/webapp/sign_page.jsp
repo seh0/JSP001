@@ -65,13 +65,13 @@ button {
 
 	<div class="container">
 		<h1>Sign In</h1>
-		<form action="sign_in.jsp" method="post">
+		<form action="mod/sign_in.jsp" method="post">
 			<input type="text" name="u_id" placeholder="Enter your ID" required>
 			<input type="password" name="u_pwd" placeholder="Enter your password" required>
 			<button type="submit">Sign In</button>
 		</form>
 		<div class="button-container">
-			<button onclick="location.href='signup_page.jsp'">Sign Up</button>
+			<button onclick="location.href='join_page.jsp'">Sign Up</button>
 			<button onclick="history.back()">Back</button>
 		</div>
 	</div>

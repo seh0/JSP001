@@ -59,7 +59,7 @@
 
 h1 {
 	text-align: center;
-	font-size: 2rem;
+	font-size: 30px;
 	margin-bottom: 20px;
 }
 </style>
@@ -83,7 +83,7 @@ h1 {
 			</div>
 		</div>
 		<div class="list-container">
-			<%@ include file="s_list.jsp"%>
+			<%@ include file="layout/s_list.jsp"%>
 		</div>
 	</div>
 	<%@ include file="layout/footer.jsp"%>

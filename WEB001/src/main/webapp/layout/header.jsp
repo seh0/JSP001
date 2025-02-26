@@ -34,7 +34,7 @@ body {
 	color: white;
 }
 
-.header a:hover{
+.header a:hover {
 	color: #3C3C8C;
 }
 
@@ -77,12 +77,10 @@ nav li {
 </head>
 <body>
 	<div class="header">
-		<h1>
-			<a href="first.jsp">JSP WEB</a>
-		</h1>
+		<h1><a href="first.jsp">JSP WEB</a></h1>
 		<nav>
 			<ul>
-				<li><a href="list_page.jsp">Board</a></li>
+				<li><a href="board_page.jsp">Board</a></li>
 				<li><a href="point_page.jsp">Point</a></li>
 				<li><a href="my_page.jsp">My Page</a></li>
 			</ul>
@@ -92,7 +90,7 @@ nav li {
 			if (session.getAttribute("u_name") != null) {
 			%>
 			<h3><%=session.getAttribute("u_name")%></h3>
-			<button onclick="location.href='sign_out.jsp'">sign out</button>
+			<button onclick="location.href='mod/sign_out.jsp'">sign out</button>
 			<%
 			} else {
 			%>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
+<%@ include file="/mod/db_connect.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +19,10 @@
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
-	background-color: #f2f2f2;
-	border-radius: 10%;
+	background-color: #f1fdf9;
+	border-radius: 12px;
 	min-height: 70vh;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -57,7 +58,7 @@ td {
 }
 
 .hov:hover {
-	background: #dcdcdc;
+	background: #eaf8e3;
 	cursor: pointer;
 }
 
@@ -87,7 +88,7 @@ td {
 				<input class="insert" type="text" name="s_title" id="s_title">
 				<input class="btn " type="submit" value="검색">
 			</form>
-			<button type="button" onclick="location.href='write_list.jsp'">글 작성</button>
+			<button type="button" onclick="location.href='write_page.jsp'">글 작성</button>
 		</div>
 		<div class="list">
 			<table>
@@ -100,16 +101,9 @@ td {
 				<%
 				request.setCharacterEncoding("UTF-8");
 				String s_title = request.getParameter("s_title");
-				String url = "jdbc:mysql://localhost:3309/spring5fs";
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = null;
 				String sql = null;
-				PreparedStatement stmt = null;
-				ResultSet rset = null;
 				int num = 1;
 				try {
-					conn = DriverManager.getConnection(url, "root", "1234");
-
 					if ("search".equals(request.getParameter("action")) && s_title != null && !s_title.isEmpty()) {
 						sql = "SELECT * FROM board WHERE title LIKE ?";
 						stmt = conn.prepareStatement(sql);
@@ -122,7 +116,7 @@ td {
 					rset = stmt.executeQuery();
 					while (rset.next()) {
 				%>
-				<tr class="hov" onclick="location.href='info_list.jsp?no=<%=rset.getString("no")%>'">
+				<tr class="hov" onclick="location.href='info_page.jsp?no=<%=rset.getString("no")%>'">
 					<td><%=num++%></td>
 					<td><%=rset.getString("title")%></td>
 					<td><%=rset.getString("writer")%></td>
@@ -133,10 +127,20 @@ td {
 				} catch (Exception e) {
 				e.printStackTrace();
 				} finally {
+				if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
+				if (rset != null)
+				try {
+					rset.close();
+				} catch (SQLException e) {
+				}
 				if (conn != null)
 				try {
 					conn.close();
-				} catch (Exception e) {
+				} catch (SQLException e) {
 				}
 				}
 				%>

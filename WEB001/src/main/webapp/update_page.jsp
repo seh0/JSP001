@@ -49,7 +49,7 @@
 <body>
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
-		<form action="update.jsp">
+		<form action="mod/update.jsp">
 			<h1>내용 수정</h1>
 			<textarea class="contents" name="contents" required placeholder="내용을 입력하세요"></textarea>
 			<input type="hidden" name="no" value=<%=request.getParameter("no")%>>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
+<%@ include file="/mod/db_connect.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,21 +42,17 @@ tr:hover {
 			<th>작성일</th>
 		</tr>
 		<%
-		String url = "jdbc:mysql://localhost:3309/spring5fs";
-		Class.forName("com.mysql.cj.jdbc.Driver");
 		String sql = "select * from board order by wdate desc";
-		Connection conn = null;
 		int cnt = 0;
 		try {
-			conn = DriverManager.getConnection(url, "root", "1234");
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			ResultSet rset = stmt.executeQuery();
+			stmt = conn.prepareStatement(sql);
+			rset = stmt.executeQuery();
 			while (rset.next()) {
 				if (cnt == 5) {
 			break;
 				}
 		%>
-		<tr onclick="window.open('show_list.jsp?no=<%=rset.getString("no")%>', '_blank', 'width=600,height=500,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">
+		<tr onclick="window.open('pop/show_list.jsp?no=<%=rset.getString("no")%>', '_blank', 'width=600,height=500,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">
 			<td><%=rset.getString("title")%></td>
 			<td><%=rset.getString("writer")%></td>
 			<td><%=rset.getString("wdate")%></td>
@@ -67,10 +63,20 @@ tr:hover {
 		} catch (Exception e) {
 		e.printStackTrace();
 		} finally {
+		if (stmt != null)
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+		}
+		if (rset != null)
+		try {
+			rset.close();
+		} catch (SQLException e) {
+		}
 		if (conn != null)
 		try {
 			conn.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 		}
 		}
 		%>

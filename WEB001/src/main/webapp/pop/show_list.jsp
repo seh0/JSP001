@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
+<%@ include file="/mod/db_connect.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,18 +41,14 @@ h1 {
 
 	<div class="container">
 		<%
-		String url = "jdbc:mysql://localhost:3309/spring5fs";
-		Class.forName("com.mysql.cj.jdbc.Driver");
 		String sql = "select * from board where no=?";
 		String b_no = request.getParameter("no");
-		Connection conn = null;
 		int no = Integer.parseInt(b_no);
 
 		try {
-			conn = DriverManager.getConnection(url, "root", "1234");
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, no);
-			ResultSet rset = stmt.executeQuery();
+			rset = stmt.executeQuery();
 
 			while (rset.next()) {
 		%>
@@ -65,10 +61,20 @@ h1 {
 		} catch (Exception e) {
 		e.printStackTrace();
 		} finally {
+		if (stmt != null)
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+		}
+		if (rset != null)
+		try {
+			rset.close();
+		} catch (SQLException e) {
+		}
 		if (conn != null)
 		try {
 			conn.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 		}
 		}
 		%>
