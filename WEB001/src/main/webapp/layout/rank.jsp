@@ -22,7 +22,7 @@
 			stmt = conn.prepareStatement(sql);
 			rset = stmt.executeQuery();
 			while (rset.next()) {
-				if (cnt == 10) {
+				if (cnt == 11) {
 			break;
 				}
 		%>

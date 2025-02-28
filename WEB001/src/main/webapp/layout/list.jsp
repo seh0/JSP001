@@ -15,6 +15,7 @@
 	border-radius: 12px;
 	min-height: 70vh;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	position: relative;
 }
 
 table {
@@ -39,6 +40,23 @@ td {
 	background: #eaf8e3;
 	cursor: pointer;
 }
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	position: absolute;
+	bottom: 20px;
+	width: 100%;
+}
+
+.pagination a {
+	padding: 10px;
+	margin: 0 5px;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -55,14 +73,28 @@ td {
 			String s_title = request.getParameter("s_title");
 			String sql = null;
 			int num = 1;
+
+			int pageSize = 10;
+			int pageNo = 1;
+			String pageParam = request.getParameter("page");
+			if (pageParam != null) {
+				pageNo = Integer.parseInt(pageParam);
+			}
+
+			int startRow = (pageNo - 1) * pageSize;
+
 			try {
 				if ("search".equals(request.getParameter("action")) && s_title != null && !s_title.isEmpty()) {
-					sql = "SELECT * FROM board WHERE title LIKE ?";
+					sql = "SELECT * FROM board WHERE title LIKE ? order by case when id = 'admin' then 0 else 1 end, wdate desc LIMIT ?, ?";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, "%" + s_title + "%");
+					stmt.setInt(2, startRow);
+					stmt.setInt(3, pageSize);
 				} else {
-					sql = "SELECT * FROM board";
+					sql = "SELECT * FROM board order by case when id = 'admin' then 0 else 1 end, wdate desc LIMIT ?, ?";
 					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, startRow);
+					stmt.setInt(2, pageSize);
 				}
 
 				rset = stmt.executeQuery();
@@ -76,27 +108,44 @@ td {
 			</tr>
 			<%
 			}
+			sql = "select count(*) from board";
+			stmt = conn.prepareStatement(sql);
+			ResultSet rset2 = stmt.executeQuery();
+			rset2.next();
+			int totalItems = rset2.getInt(1);
+			int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+			%>
+		</table>
+		<div class="pagination">
+			<%
+            for (int i = 1; i <= totalPages; i++) {
+            %>
+                <a href="?page=<%= i %>"><%= i %></a>
+            <%
+            }
+            %>
+		</div>
+			<%
 			} catch (Exception e) {
 			e.printStackTrace();
 			} finally {
 			if (rset != null)
-			try {
-				rset.close();
-			} catch (SQLException e) {
-			}
+				try {
+					rset.close();
+				} catch (SQLException e) {
+				}
 			if (stmt != null)
-			try {
-				stmt.close();
-			} catch (SQLException e) {
-			}
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
 			if (conn != null)
-			try {
-				conn.close();
-			} catch (SQLException e) {
-			}
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
 			}
 			%>
-		</table>
 	</div>
 </body>
 </html>

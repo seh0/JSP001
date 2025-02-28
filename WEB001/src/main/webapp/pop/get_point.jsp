@@ -7,6 +7,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Get Point</title>
+<style>
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #5a9;
+	color: white;
+}
+
+.progress-container {
+	width: 80%;
+	height: 30px;
+	background-color: #f3f3f3;
+	border-radius: 15px;
+	overflow: hidden;
+	position: fixed;
+	bottom: 10px;
+	left: 10%;
+}
+
+.progress-bar {
+	height: 100%;
+	width: 0;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 	<%
@@ -31,9 +64,10 @@
 			long ptime = pdateTs.getTime();
 			long timeD = ctime - ptime;
 			long minute = timeD / (1000 * 60);
-			long rtime = 60 * 10;
 
-			if (minute >= rtime) {
+			long rminute = 60;
+
+			if (minute >= rminute) {
 		sql = "update account set point=point+?, pdate=now() where id=?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, p);
@@ -44,8 +78,15 @@
 	</h1>
 	<%
 	} else {
+	int progress = (int) ((minute / (double) rminute) * 100);
 	%>
-	<h1><%=(rtime - minute)%> minute left</h1>
+	<h1><%=(rminute - minute)%>분 후 획득 가능</h1>
+	<div class="progress-container">
+		<div id="progress-bar" class="progress-bar" style="width: <%=progress%>%; background-color: 
+			<%=progress > 66 ? "green" : (progress > 33 ? "orange" : "red")%>;">
+			<%=progress%>%
+		</div>
+	</div>
 	<%
 	}
 	}
