@@ -34,6 +34,11 @@
 		</tr>
 		<%
 		}
+		if (stmt != null)
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+		}
 		String u_id = (String) session.getAttribute("u_id");
 		if (u_id != null) {
 		sql = "select point from account where id=?";
