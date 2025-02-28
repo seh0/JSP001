@@ -43,10 +43,25 @@
 		if (rset2.next()) {
 			p = rset2.getInt("point");
 		}
+		if (rset2 != null)
+			try {
+				rset2.close();
+			} catch (SQLException e) {
+			}
 		}
 		} catch (Exception e) {
 		e.printStackTrace();
 		} finally {
+		if (rset != null)
+		try {
+			rset.close();
+		} catch (SQLException e) {
+		}
+		if (stmt != null)
+		try {
+			stmt.close();
+		} catch (SQLException e) {
+		}
 		if (conn != null)
 		try {
 			conn.close();

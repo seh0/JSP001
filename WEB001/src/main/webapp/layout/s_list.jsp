@@ -63,14 +63,14 @@ tr:hover {
 		} catch (Exception e) {
 		e.printStackTrace();
 		} finally {
-		if (stmt != null)
-		try {
-			stmt.close();
-		} catch (SQLException e) {
-		}
 		if (rset != null)
 		try {
 			rset.close();
+		} catch (SQLException e) {
+		}
+		if (stmt != null)
+		try {
+			stmt.close();
 		} catch (SQLException e) {
 		}
 		if (conn != null)
