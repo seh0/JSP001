@@ -61,6 +61,9 @@
 	<h1>나이: <%=rset.getInt("age")%></h1>
 	<h1>포인트: <%=rset.getInt("point")%></h1>
 	<h1>가입날짜: <%=rset.getString("jdate")%></h1>
+	<button onclick="window.open('pop/show_write.jsp', '_blank', 'width=600,height=500,top=' + (window.screenY + 100) + ',left=' + (window.screenX + 100))">
+	작성 글 보기
+	</button>
 	<form>
 		<input type="hidden" name="action" value="delete">
 		<input style="color: white; background-color: red; width: 5vw; margin-left: auto;" type="submit" value="탈퇴">

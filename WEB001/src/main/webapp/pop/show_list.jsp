@@ -44,6 +44,7 @@ h1 {
 		String sql = "select * from board where no=?";
 		String b_no = request.getParameter("no");
 		int no = Integer.parseInt(b_no);
+		String cont = null;
 
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -51,10 +52,12 @@ h1 {
 			rset = stmt.executeQuery();
 
 			while (rset.next()) {
+				cont = rset.getString("cont");
+				cont = cont.replace("\n", "<br>");
 		%>
 		<h1><%=rset.getString("title")%></h1>
 		<div class="content">
-			<%=rset.getString("cont")%>
+			<%=cont%>
 		</div>
 		<%
 		}

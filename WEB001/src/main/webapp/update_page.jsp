@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,8 +6,12 @@
 <meta charset="UTF-8">
 <title>Update</title>
 <style>
+body {
+	background-color: #f1fdf9;
+}
+
 .page {
-	min-height: 100vh;
+	min-height: 70vh;
 	display: flex;
 	flex-direction: column;
 	margin: 15vh 10vh;
@@ -47,11 +52,17 @@
 </style>
 </head>
 <body>
+	<%
+	String cont = request.getParameter("cont");
+	if (cont != null) {
+		cont = URLDecoder.decode(cont,"UTF-8");
+	}
+	%>
 	<%@ include file="layout/header.jsp"%>
 	<div class="page">
 		<form action="mod/update.jsp">
 			<h1>내용 수정</h1>
-			<textarea class="contents" name="contents" required placeholder="내용을 입력하세요"></textarea>
+			<textarea class="contents" name="contents" required><%=cont%></textarea>
 			<input type="hidden" name="no" value=<%=request.getParameter("no")%>>
 			<br>
 			<button class="updt" type="submit">update</button>

@@ -11,6 +11,7 @@
 	String b_no = request.getParameter("no");
 	int no = Integer.parseInt(b_no);
 	String b_id = null;
+	String b_cont = null;
 	try {
 		String sql = "select * from board where no=?";
 		stmt = conn.prepareStatement(sql);
@@ -18,11 +19,13 @@
 		rset = stmt.executeQuery();
 		while (rset.next()) {
 			b_id = rset.getString("id");
+			b_cont = rset.getString("cont");
+			b_cont = b_cont.replace("\n", "<br>");
 	%>
 	<h1>제목 : <%=rset.getString("title")%></h1>
 	<br>
 	<br>
-	<h2><%=rset.getString("cont")%></h2>
+	<h2><%=b_cont%></h2>
 	<h3>작성자 : <%=rset.getString("writer")%><br> 작성일 : <%=rset.getString("wdate")%>
 	</h3>
 	<%

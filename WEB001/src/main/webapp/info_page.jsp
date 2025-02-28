@@ -9,6 +9,10 @@ body {
 	background-color: #f1fdf9;
 }
 
+.wrap {
+	min-height: 100vh;
+}
+
 .page {
 	min-height: 60vh;
 	display: flex;
@@ -58,27 +62,30 @@ body {
 </head>
 <body>
 	<%@ include file="layout/header.jsp"%>
-	<div class="page">
-		<%@ include file="layout/info.jsp"%>
-		<div class="b_box">
-			<%
-			String u_id = (String) session.getAttribute("u_id");
-			if (u_id != null) {
-				if (u_id.equals("admin") || u_id.equals(b_id)) {
-			%>
-			<form action="update_page.jsp">
-				<input type="hidden" name="no" value=<%=b_no%>>
-				<button type="submit">update</button>
-			</form>
-			<form action="mod/delete.jsp">
-				<input type="hidden" name="no" value=<%=b_no%>>
-				<button type="submit">delete</button>
-			</form>
-			<%
-			}
-			}
-			%>
-			<button type="button" onclick="history.back()">back</button>
+	<div class="wrap">
+		<div class="page">
+			<%@ include file="layout/info.jsp"%>
+			<div class="b_box">
+				<%
+				String u_id = (String) session.getAttribute("u_id");
+				if (u_id != null) {
+					if (u_id.equals("admin") || u_id.equals(b_id)) {
+				%>
+				<form method="post" action="update_page.jsp">
+					<input type="hidden" name="no" value=<%=b_no%>>
+					<input type="hidden" name="cont" value="<%=java.net.URLEncoder.encode(b_cont, "UTF-8")%>">
+					<button type="submit">update</button>
+				</form>
+				<form action="mod/delete.jsp">
+					<input type="hidden" name="no" value=<%=b_no%>>
+					<button type="submit">delete</button>
+				</form>
+				<%
+				}
+				}
+				%>
+				<button type="button" onclick="history.back()">back</button>
+			</div>
 		</div>
 	</div>
 	<%@ include file="layout/footer.jsp"%>
